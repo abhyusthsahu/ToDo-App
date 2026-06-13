@@ -2,11 +2,13 @@
 import './App.css';
 import { Component } from 'react';
 import Counter from './Components/counter/Counter';
+import TodoApp from './Components/todo/TodoApp';
 
 export default function App() {
   return (
     <div className="App">
-      <Counter />
+      {/* <Counter /> */}
+      <TodoApp />
     </div>
   );
 }
