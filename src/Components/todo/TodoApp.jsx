@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import {BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import './TodoApp.css';
 
 export default function TodoApp() {
     return (
         <div className="TodoApp">
-            <LoginComponent />
-            {/* <WelcomeComponent /> */}
+            <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<LoginComponent />}></Route>
+                <Route path="/login" element={<LoginComponent />}></Route>
+                <Route path="/welcome" element={<WelcomeComponent />}></Route>
+            </Routes>
+            </BrowserRouter>
         </div>
     )
 }
@@ -24,24 +30,11 @@ function LoginComponent() {
         if (username === "abhyusth" && password === "123456") {
             setShowSuccessMessage(true);
             setShowErrorMessage(false);
+            navigate("/welcome");
         } else {
             setShowErrorMessage(true);
             setShowSuccessMessage(false);
         }
-    }
-
-    function SuccessMessageComponent() {
-        if (showSuccessMessage) {
-            return <div className="successMessage">Authenticated Successfully</div>
-        }
-            return null
-    }
-
-    function ErrorMessageComponent() {
-        if (showErrorMessage) {
-            return <div className="errorMessage">Authenticated Failed. Please check your credentials.</div>
-        }
-            return null
     }
 
     const [username, setUsername] = useState("abhyusth");
@@ -52,10 +45,12 @@ function LoginComponent() {
 
     const [showErrorMessage, setShowErrorMessage] = useState(false);
 
+    const navigate = useNavigate();
+
     return (
         <div className="Login">
-            <SuccessMessageComponent />
-            <ErrorMessageComponent />
+            {showSuccessMessage && <div className="successMessage">Authenticated Successfully</div>}
+            {showErrorMessage && <div className="errorMessage">Authenticated Failed. Please check your credentials.</div>}
             <div className="LoginForm">
                 <div>
                     <label>UserName</label>
@@ -75,7 +70,7 @@ function LoginComponent() {
 
 function WelcomeComponent() {
     return (
-        <div classsName="Welcome">
+        <div className="Welcome">
             Welcome Component
         </div>
     )
