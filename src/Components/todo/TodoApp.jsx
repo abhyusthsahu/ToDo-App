@@ -97,6 +97,9 @@ function ErrorComponent() {
 
 function ListTodosComponent() {
 
+    const today = new Date();
+    const targetDate = new Date(today.getFullYear() + 12, today.getMonth(), today.getDate() + 7);
+
     const todos = [
         { id: 1, description: "Learn React" },
         { id: 2, description: "Learn AWS" },
