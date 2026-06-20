@@ -1,18 +1,22 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, useParams, Link } from 'react-router-dom';
 import './TodoApp.css';
+import LogoutComponent from './LogoutComponent';
 
 export default function TodoApp() {
     return (
         <div className="TodoApp">
             <BrowserRouter>
+            <HeaderComponent/>
                 <Routes>
                     <Route path="/" element={<LoginComponent />} />
                     <Route path="/login" element={<LoginComponent />} />
                     <Route path="/welcome/:username" element={<WelcomeComponent />} />
                     <Route path="/todos" element={<ListTodosComponent />} />
+                    <Route path="/logout" element={<LogoutComponent/>} />
                     <Route path="*" element={<ErrorComponent />} />
                 </Routes>
+            <FooterComponent/>
             </BrowserRouter>
         </div>
     )
@@ -80,7 +84,7 @@ function WelcomeComponent() {
         <div className="Welcome">
             <h1>Welcome {username}</h1>
             <div>
-                Welcome Component
+                Your Todos. <Link to="/todos">Go Here</Link>
             </div>
         </div>
     )
@@ -101,19 +105,21 @@ function ListTodosComponent() {
     const targetDate = new Date(today.getFullYear() + 12, today.getMonth(), today.getDate() + 7);
 
     const todos = [
-        { id: 1, description: "Learn React", done: false, targetDate: {targetDate} },
-        { id: 2, description: "Learn AWS", done: false, targetDate: {targetDate} },
-        { id: 3, description: "Learn Kafka", done: false, targetDate: {targetDate} }
+        { id: 1, description: "Learn React", done: false, targetDate: targetDate },
+        { id: 2, description: "Learn AWS", done: false, targetDate: targetDate },
+        { id: 3, description: "Learn Kafka", done: false, targetDate: targetDate }
     ];
     return (
-        <div className="ListTodosComponent">
+        <div className="container">
             <h1>Things To Do</h1>
             <div>
-                <table>
+                <table className="table">
                     <thead>
                         <tr>
                             <td>id</td>
                             <td>description</td>
+                            <td>done</td>
+                            <td>Target Date</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,8 +128,8 @@ function ListTodosComponent() {
                                 <tr key={todo.id}>
                                     <td>{todo.id}</td>
                                     <td>{todo.description}</td>
-                                    <td>{todo.done}</td>
-                                    <td>{todo.targetdate}</td>
+                                    <td>{todo.done.toString()}</td>
+                                    <td>{todo.targetDate.toDateString()}</td>
                                 </tr>
                             )
                             )
@@ -135,3 +141,38 @@ function ListTodosComponent() {
         </div>
     )
 }  
+
+function HeaderComponent() {
+    return (
+        <header className="border-bottom border-light border-5 mb-5 p-2">
+            <div className="container">
+                <div className="row">
+                    <nav className="navbar navbar-expand-lg">
+                        <a className="navbar-brand ms-2 fs-2 fw-bold text-primary" href="https://www.fico.com">FICO</a>
+                        <div className="collapse navbar-collapse">
+                            <ul className="navbar-nav">
+                                <li className="nav-item fs-5"><Link className="nav-link" to="/welcome/abhyusth">Home</Link></li>
+                                <li className="nav-item fs-5"><Link className="nav-link" to="/todos">Todos</Link></li>
+                            </ul>
+                        </div>
+                        <ul className="navbar-nav">
+                            <li className="nav-item fs-5"><Link className="nav-link" to="/login">Login</Link></li>
+                            <li className="nav-item fs-5"><Link className="nav-link" to="/logout">Logout</Link></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+    )
+}
+
+function FooterComponent() {
+    return (
+        <footer className="FooterComponent">
+            <div className="container">
+                <hr/>Footer
+                </div>
+        </footer>
+    )
+}

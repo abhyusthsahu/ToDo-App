@@ -7,3 +7,11 @@ button[name="login"]{
     background-color: black; /* Green */
     border: none;
 }
+
+footer {
+    bottom: 0;
+    position: absolute;
+    width: 90%;
+    height: 40px;
+
+}
