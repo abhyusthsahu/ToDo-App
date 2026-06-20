@@ -97,10 +97,13 @@ function ErrorComponent() {
 
 function ListTodosComponent() {
 
+    const today = new Date();
+    const targetDate = new Date(today.getFullYear() + 12, today.getMonth(), today.getDate() + 7);
+
     const todos = [
-        { id: 1, description: "Learn React" },
-        { id: 2, description: "Learn AWS" },
-        { id: 3, description: "Learn Kafka" }
+        { id: 1, description: "Learn React", done: false, targetDate: {targetDate} },
+        { id: 2, description: "Learn AWS", done: false, targetDate: {targetDate} },
+        { id: 3, description: "Learn Kafka", done: false, targetDate: {targetDate} }
     ];
     return (
         <div className="ListTodosComponent">
@@ -119,6 +122,8 @@ function ListTodosComponent() {
                                 <tr key={todo.id}>
                                     <td>{todo.id}</td>
                                     <td>{todo.description}</td>
+                                    <td>{todo.done}</td>
+                                    <td>{todo.targetdate}</td>
                                 </tr>
                             )
                             )
