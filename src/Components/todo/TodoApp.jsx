@@ -2,6 +2,11 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useParams, Link } from 'react-router-dom';
 import './TodoApp.css';
 import LogoutComponent from './LogoutComponent';
+import HeaderComponent from './HeaderComponent';
+import ListTodosComponent from './ListTodosComponent';
+import ErrorComponent from './ErrorComponent';
+import WelcomeComponent from './WelcomeComponent';
+import LoginComponent from './LoginComponent';
 
 export default function TodoApp() {
     return (
@@ -16,163 +21,7 @@ export default function TodoApp() {
                     <Route path="/logout" element={<LogoutComponent/>} />
                     <Route path="*" element={<ErrorComponent />} />
                 </Routes>
-            <FooterComponent/>
             </BrowserRouter>
         </div>
-    )
-}
- 
-function LoginComponent() {
-
-    const [username, setUsername] = useState("abhyusth");
-
-    const [password, setPassword] = useState("");
-
-    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
-    const [showErrorMessage, setShowErrorMessage] = useState(false);
-
-    const navigate = useNavigate();
-
-    function handleUsernameChange(event) {
-        setUsername(event.target.value);
-    }
-
-    function handlePasswordChange(event) {
-        setPassword(event.target.value);
-    }
-
-    function handleSubmit() {
-
-        if (username === "abhyusth" && password === "123456") {
-            setShowSuccessMessage(true);
-            setShowErrorMessage(false);
-            navigate(`/welcome/${username}`);
-        } else {
-            setShowErrorMessage(true);
-            setShowSuccessMessage(false);
-        }
-    }
-
-    return (
-        <div className="Login">
-            <h1>Sign in</h1>
-            {showSuccessMessage && <div className="successMessage">Authenticated Successfully</div>}
-            {showErrorMessage && <div className="errorMessage">Authenticated Failed. Please check your credentials.</div>}
-            <div className="LoginForm">
-                <div>
-                    <label>UserName</label>
-                    <input type="text" name="username" value={username} onChange={handleUsernameChange} />
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" name="password" value={password} onChange={handlePasswordChange} />
-                </div>
-                <div>
-                    <button type="button" name="login" onClick={handleSubmit}>Login</button>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-function WelcomeComponent() {
-
-    const { username } = useParams();
-
-    return (
-        <div className="Welcome">
-            <h1>Welcome {username}</h1>
-            <div>
-                Your Todos. <Link to="/todos">Go Here</Link>
-            </div>
-        </div>
-    )
-}
-
-function ErrorComponent() {
-    return (
-        <div className="Error">
-            <h1>We are working really hard!</h1>
-            <div>Apologies for the 404, please contact system admin</div>
-        </div>
-    )
-}
-
-function ListTodosComponent() {
-
-    const today = new Date();
-    const targetDate = new Date(today.getFullYear() + 12, today.getMonth(), today.getDate() + 7);
-
-    const todos = [
-        { id: 1, description: "Learn React", done: false, targetDate: targetDate },
-        { id: 2, description: "Learn AWS", done: false, targetDate: targetDate },
-        { id: 3, description: "Learn Kafka", done: false, targetDate: targetDate }
-    ];
-    return (
-        <div className="container">
-            <h1>Things To Do</h1>
-            <div>
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <td>id</td>
-                            <td>description</td>
-                            <td>done</td>
-                            <td>Target Date</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            todos.map(todo => (
-                                <tr key={todo.id}>
-                                    <td>{todo.id}</td>
-                                    <td>{todo.description}</td>
-                                    <td>{todo.done.toString()}</td>
-                                    <td>{todo.targetDate.toDateString()}</td>
-                                </tr>
-                            )
-                            )
-                        }
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-    )
-}  
-
-function HeaderComponent() {
-    return (
-        <header className="border-bottom border-light border-5 mb-5 p-2">
-            <div className="container">
-                <div className="row">
-                    <nav className="navbar navbar-expand-lg">
-                        <a className="navbar-brand ms-2 fs-2 fw-bold text-primary" href="https://www.fico.com">FICO</a>
-                        <div className="collapse navbar-collapse">
-                            <ul className="navbar-nav">
-                                <li className="nav-item fs-5"><Link className="nav-link" to="/welcome/abhyusth">Home</Link></li>
-                                <li className="nav-item fs-5"><Link className="nav-link" to="/todos">Todos</Link></li>
-                            </ul>
-                        </div>
-                        <ul className="navbar-nav">
-                            <li className="nav-item fs-5"><Link className="nav-link" to="/login">Login</Link></li>
-                            <li className="nav-item fs-5"><Link className="nav-link" to="/logout">Logout</Link></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
-
-    )
-}
-
-function FooterComponent() {
-    return (
-        <footer className="FooterComponent">
-            <div className="container">
-                <hr/>Footer
-                </div>
-        </footer>
     )
 }
